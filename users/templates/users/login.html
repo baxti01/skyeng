@@ -1,0 +1,15 @@
+{% extends "users/auth_base.html" %}
+
+{% block form_title %}
+    Вы уже авторизованы!
+{% endblock %}
+{% block form_description %}
+    Вернитесь к главной странице.
+{% endblock %}
+{% block form_name %}
+    Форма входа
+{% endblock %}
+{% block form_buttons %}
+    <button type="submit" class="btn btn-primary">Войти</button>
+    <a href="{% url 'users:sign_up' %}" class="badge badge-info">Регистрация</a>
+{% endblock %}

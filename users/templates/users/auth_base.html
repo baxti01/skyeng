@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            {% if user.is_authenticated %}
+                <h2>
+                    {% block form_title %}
+                    {% endblock %}
+                </h2>
+                <p>
+                    {% block form_description %}
+                    {% endblock %}
+                </p>
+            {% else %}
+                <div class="col-8">
+                    <h4 class="my-2">
+                        {% block form_name %}
+                        {% endblock %}
+                    </h4>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {% for filed in form %}
+                                <p>
+                                    {% if filed.errors %}
+                                        {{ filed.errors }}
+                                    {% endif %}
+                                    <lable for="{{ filed.name }}">
+                                        {{ filed.label }}:
+                                    </lable>
+                                    <input
+                                            class="border-white form-control"
+                                            id="{{ filed.name }}"
+                                            name="{{ filed.name }}"
+                                            type="{{ filed.widget_type }}"
+                                    >
+                                </p>
+                            {% endfor %}
+                        </div>
+                        <div class="container-buttons">
+                            {% block form_buttons %}
+                            {% endblock %}
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
