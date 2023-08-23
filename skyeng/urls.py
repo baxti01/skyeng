@@ -31,6 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('auth/', include('users.urls', namespace='users')),
+    path('review/', include('code_review.urls', namespace='code_review')),
 ]
 
 if settings.DEBUG:

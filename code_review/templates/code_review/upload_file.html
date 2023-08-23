@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load my_filters %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                {% block form_title %}
+                    <h4 class="mb-3">Выберите файлы для загрузки</h4>
+                {% endblock %}
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {% for field in form %}
+                            <p>
+                                {{ form.subject.errors }}
+                                {{ field.label_tag }}
+                                {{ field|addClass:'form-control border-white'}}
+                            </p>
+                        {% endfor %}
+                    </div>
+                    <div class="container-buttons">
+                        {% block form_buttons %}
+                            <button type="submit" class="btn btn-primary">Добавить</button>
+                        {% endblock %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

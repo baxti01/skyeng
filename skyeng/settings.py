@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # My apps
     'users.apps.UsersConfig',
+    'code_review.apps.CodeReviewConfig',
 ]
 
 MIDDLEWARE = [
@@ -119,7 +120,8 @@ USE_I18N = True
 
 USE_TZ = True
 
-LOGIN_URL = 'login'
+# LOGIN_URL = 'users:login'
+LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)

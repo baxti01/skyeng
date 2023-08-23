@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load my_filters %}
+
 {% block content %}
     <div class="container">
         <div class="row justify-content-center">
@@ -20,20 +22,11 @@
                     <form method="POST" action="">
                         {% csrf_token %}
                         <div class="form-group">
-                            {% for filed in form %}
+                            {% for field in form %}
                                 <p>
-                                    {% if filed.errors %}
-                                        {{ filed.errors }}
-                                    {% endif %}
-                                    <lable for="{{ filed.name }}">
-                                        {{ filed.label }}:
-                                    </lable>
-                                    <input
-                                            class="border-white form-control"
-                                            id="{{ filed.name }}"
-                                            name="{{ filed.name }}"
-                                            type="{{ filed.widget_type }}"
-                                    >
+                                {{ field.errors }}
+                                {{ field.label_tag }}
+                                {{ field|addClass:'form-control border-white'}}
                                 </p>
                             {% endfor %}
                         </div>

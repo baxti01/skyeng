@@ -3,3 +3,11 @@ a {
     color: white;
     font-weight: normal;
 }
+
+.my-icon-weight{
+    width: 0.9em;
+}
+
+.overflow-auto{
+    overflow: auto;
+}

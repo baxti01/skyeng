@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load get_file_status %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-10">
+                <h4>Все файлы</h4>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-9">
+                <div class="list-group">
+                    {% for file in files %}
+                        <div class="list-group-item p-1">
+                            <div class="text-start d-flex justify-content-between align-items-center">
+                                <a data-bs-toggle="tooltip" data-bs-title="Посмотреть логи проверки"
+                                   href="{% url 'code_review:get_file_log' pk=file.pk %}"
+                                   class="ps-2 pe-2 pt-1 pb-1 flex-grow-1">
+                                    {{ forloop.counter }}. {{ file.name }}
+                                </a>
+
+                                <a class="ps-2 pe-2 pt-1 pb-1" href="{% url 'code_review:upload_file' %}">
+                                    <img data-bs-toggle="tooltip" data-bs-title="Запустить проверку"
+                                         class="my-icon-weight" src="{% static 'code_review/images/run.svg' %}"
+                                         alt="status">
+                                </a>
+
+                                {% get_file_status file=file %}
+
+                                <a class="ps-2 pe-2 pt-1 pb-1" href="{% url 'code_review:upload_file' %}">
+                                    <img data-bs-toggle="tooltip" data-bs-title="Удалить файл"
+                                         class="my-icon-weight" src="{% static 'code_review/images/trash.svg' %}"
+                                         alt="delete">
+                                </a>
+                                <a class="ps-2 pe-2 pt-1 pb-1" href="{% url 'code_review:modify_file' pk=file.pk %}">
+                                    <img data-bs-toggle="tooltip" data-bs-title="Изменить файл"
+                                         class="my-icon-weight" src="{% static 'code_review/images/pen.svg' %}"
+                                         alt="edit">
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-2">
+                <a data-bs-toggle="tooltip" data-bs-title="Добавить файл"
+                   href="{% url 'code_review:upload_file' %}" class="btn btn-primary">
+                    Добавить
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

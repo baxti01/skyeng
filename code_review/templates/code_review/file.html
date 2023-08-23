@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <p>Логи проверки файла: filename</p>
+            <div class="col-9">
+                <pre class="bg-light-subtle p-1 text-start overflow-auto">
+                    <code>
+def get_files(request):
+    return render(request, 'code_review/list_files.html')
+
+
+def get_file(request, pk):
+    return render(request, 'code_review/list_files.html')
+                    </code>
+                </pre>
+            </div>
+        </div>
+    </div>
+{% endblock %}

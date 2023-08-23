@@ -1,0 +1,9 @@
+{% load static %}
+{% for status in statuses %}
+    <a class="ps-2 pe-2 pt-1 pb-1" href="#">
+        <img data-bs-toggle="tooltip" data-bs-title="{{ status.tooltip }}"
+             class="my-icon-weight"
+             src="{% static status.icon_path %}"
+             alt="{{ status.tooltip }}">
+    </a>
+{% endfor %}
