@@ -1,6 +1,6 @@
 from django import template
 
-from code_review.models import StatusType
+from code_review.models import StatusType, SentStatusType
 
 register = template.Library()
 
@@ -41,3 +41,19 @@ def get_file_status(file):
         )
 
     return {'statuses': statuses}
+
+
+@register.inclusion_tag('code_review/notification_status.html')
+def get_notification_status(sent_status):
+    status = {
+        'icon_path': 'code_review/images/x.svg',
+        'tooltip': 'Уведомление ещё не отправлено'
+    }
+
+    if sent_status == SentStatusType.SENT:
+        return {
+            'icon_path': 'code_review/images/checked.svg',
+            'tooltip': 'Уведомление отправлено'
+        }
+
+    return {'status': status}

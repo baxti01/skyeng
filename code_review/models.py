@@ -22,6 +22,11 @@ class StatusType(models.TextChoices):
     FAILED = 'failed'
 
 
+class SentStatusType(models.TextChoices):
+    SENT = 'sent'
+    NOT_SENT = 'not_sent'
+
+
 class File(models.Model):
     name = models.CharField(max_length=40, blank=False)
     status = models.CharField(choices=StatusType.choices)
@@ -32,7 +37,20 @@ class File(models.Model):
         ]
     )
 
-    start_datetime = models.DateTimeField(blank=False)
-    period = models.TimeField(blank=False)
+    # start_datetime = models.DateTimeField(blank=False)
+    # period = models.TimeField(blank=False)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Log(models.Model):
+    linter = models.CharField(max_length=20, blank=False)
+    sent_status = models.CharField(
+        choices=SentStatusType.choices,
+        default=SentStatusType.NOT_SENT
+    )
+    log_text = models.TextField()
+    datetime = models.DateTimeField(auto_now=True)
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    file = models.ForeignKey(File, on_delete=models.CASCADE)

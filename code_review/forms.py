@@ -37,8 +37,8 @@ class UploadFileForm(forms.Form):
             FileExtensionValidator(allowed_extensions=['py'])
         ]
     )
-    start_datetime = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
-    period = forms.ChoiceField(choices=PERIOD_CHOICES)
+    # start_datetime = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
+    # period = forms.ChoiceField(choices=PERIOD_CHOICES)
 
 
 class ModifyForm(forms.Form):
@@ -48,5 +48,5 @@ class ModifyForm(forms.Form):
             FileExtensionValidator(allowed_extensions=['py'])
         ]
     )
-    start_datetime = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
-    period = forms.ChoiceField(choices=PERIOD_CHOICES)
+    # start_datetime = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
+    # period = forms.ChoiceField(choices=PERIOD_CHOICES)

@@ -1,0 +1,10 @@
+{% load static %}
+
+<div>
+    Статус уведомления
+    <img data-bs-toggle="tooltip"
+         data-bs-title="{{ status.tooltip }}"
+         class="my-icon-weight"
+         src="{% static status.icon_path %}"
+         alt="{{ status.tooltip }}">
+</div>
