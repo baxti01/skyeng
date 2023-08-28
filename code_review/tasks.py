@@ -1,12 +1,14 @@
 from celery import shared_task
+from django.core.mail import BadHeaderError, send_mail
 from django.db.models import Q
 
-from code_review.models import File, StatusType, Log
+from code_review.models import File, StatusType, Log, SentStatusType
 from code_review.services import LintersService
+from skyeng import settings
 
 
 @shared_task
-def code_check():
+def code_check_task():
     files = File.objects.filter(
         Q(status=StatusType.NEW)
         |
@@ -28,10 +30,30 @@ def code_check():
             instance = Log.objects.create(**log)
 
         File.objects.filter(id=instance.file_id).update(status=StatusType.CHECKED)
+        send_email_task(instance.linter, instance.pk, instance.user_id)
+        # send_email_task(instance.linter, instance.pk, instance.user_id).delay()
 
     return result
 
 
 @shared_task
-def send_email():
-    pass
+def send_email_task(linter, file_id, user_id):
+    subject = f'{linter.capitalize()}: Code review notification.'
+    message = f'Your file is checked with {linter}. See more details in website'
+    try:
+        send_mail(
+            subject=subject,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            message=message,
+            recipient_list=[settings.DEFAULT_FROM_EMAIL]
+        )
+    except BadHeaderError:
+        return 'Invalid header error'
+
+    log = Log.objects.filter(
+        linter=linter,
+        file_id=file_id,
+        user_id=user_id
+    ).update(sent_status=SentStatusType.SENT)
+
+    return log
