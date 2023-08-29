@@ -31,31 +31,53 @@
     <div class="row justify-content-center">
         {% if user.is_authenticated %}
             <aside class="col-2 list-group p-0">
+                {% if page == 'home' %}
+                    <a href="{% url 'home' %}" class="bg-success list-group-item list-group-item-action">Главная</a>
+                {% else %}
+                    <a href="{% url 'home' %}" class="my-border list-group-item text-bg-dark list-group-item-action">Главная</a>
+                {% endif %}
+
                 {% if page == 'files' %}
                     <a href="{% url 'code_review:get_files' %}"
                        class="bg-success list-group-item list-group-item-action">Файлы</a>
                 {% else %}
-                    <a href="{% url 'code_review:get_files' %}" class="my-border list-group-item text-bg-dark list-group-item-action">Файлы</a>
+                    <a href="{% url 'code_review:get_files' %}"
+                       class="my-border list-group-item text-bg-dark list-group-item-action">Файлы</a>
                 {% endif %}
 
-                {% if page == 'review' %}
-                    <a href="#"
-                       class="bg-success list-group-item list-group-item-action">Задачи</a>
-                {% else %}
-                    <a href="#"
-                       class="list-group-item list-group-item-action">Задачи</a>
-                {% endif %}
-
-                {% if page == 'reports' %}
-                    <a href="#" class="active list-group-item list-group-item-action">Отчёты</a>
-                {% else %}
-                    <a href="#" class="list-group-item list-group-item-action">Отчёты</a>
-                {% endif %}
             </aside>
         {% endif %}
         <main class="col-7">
-            {% block title %}{% endblock %}
-            {% block content %}{% endblock %}
+            {% block content %}
+                <div class="row justify-content-center">
+                    <div class="col-9">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                О проекте
+                            </div>
+                            <div class="card-body p-0 mb-2">
+                                <h2>Code Reviewer</h2>
+                                <p style="text-align: justify" class="card-text my-border-top p-1 ps-3 pe-3">
+                                    &emsp;Это сервис проверки python кода на соответствия общепринятым правилам.
+                                    Сервис имеет пользовательский интерфейс в виде сайта.
+                                    Сервис написан на языке программирования python с использованием
+                                    его фреймворков Django.<br>
+                                    &emsp;Для использования сервиса нужно пройти регистрацию и загрузить файлы с
+                                     расширением .ру. Проверка выполняется автоматически раз одну минуту. <br>
+                                    &emsp;Результаты проверки файлов отправляются на указанный почтовый адрес
+                                    при регистрации пользователя. А так же их можно смотреть в разделе файлов сайта
+                                    нажав на конкретный файл в списке.
+                                </p>
+                            </div>
+                            <div class="card-footer text-body-secondary">
+                                <a href="{% url 'code_review:get_files' %}" class="btn btn-primary">
+                                    Проверить файлы
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
         </main>
     </div>
 </div>

@@ -30,14 +30,20 @@ def code_check_task():
             instance = Log.objects.create(**log)
 
         File.objects.filter(id=instance.file_id).update(status=StatusType.CHECKED)
-        send_email_task(instance.linter, instance.pk, instance.user_id)
-        # send_email_task(instance.linter, instance.pk, instance.user_id).delay()
+        send_email_task.apply_async(
+            kwargs={
+                'linter': instance.linter,
+                'file_id': instance.file_id,
+                'user_id': instance.user_id,
+                'email': instance.user.email,
+            }
+        )
 
     return result
 
 
 @shared_task
-def send_email_task(linter, file_id, user_id):
+def send_email_task(linter, file_id, user_id, email):
     subject = f'{linter.capitalize()}: Code review notification.'
     message = f'Your file is checked with {linter}. See more details in website'
     try:
@@ -45,7 +51,7 @@ def send_email_task(linter, file_id, user_id):
             subject=subject,
             from_email=settings.DEFAULT_FROM_EMAIL,
             message=message,
-            recipient_list=[settings.DEFAULT_FROM_EMAIL]
+            recipient_list=[email]
         )
     except BadHeaderError:
         return 'Invalid header error'

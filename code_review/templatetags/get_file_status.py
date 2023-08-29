@@ -51,9 +51,7 @@ def get_notification_status(sent_status):
     }
 
     if sent_status == SentStatusType.SENT:
-        return {
-            'icon_path': 'code_review/images/checked.svg',
-            'tooltip': 'Уведомление отправлено'
-        }
+        status['icon_path'] = 'code_review/images/checked.svg'
+        status['tooltip'] = 'Уведомление отправлено'
 
     return {'status': status}

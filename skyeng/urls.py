@@ -24,7 +24,7 @@ from skyeng import settings
 
 # dev function
 def home(request):
-    return render(request, 'base.html')
+    return render(request, 'base.html', {'page': 'home'})
 
 
 urlpatterns = [

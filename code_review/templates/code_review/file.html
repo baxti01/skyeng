@@ -6,7 +6,10 @@
         <div class="row align-items-center flex-column">
             <div class="col-9 mb-2">
                 <h4>
-                    Логи проверки файла
+                    Логи проверки файла:
+                    {% if file_logs %}
+                        {{ file_logs.first.file.name }}
+                    {% endif %}
                 </h4>
             </div>
             <div class="col-9 mb-2">
