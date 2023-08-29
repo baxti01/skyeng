@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
@@ -45,3 +45,15 @@ class UserChangeForm(forms.ModelForm):
 class LoginForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput())
     password = forms.CharField(widget=forms.PasswordInput())
+
+    def clean(self):
+        email = self.cleaned_data.get('email').strip()
+        password = self.cleaned_data.get('password').strip()
+
+        if email and password:
+            user = authenticate(email=email, password=password)
+
+            if not user:
+                raise forms.ValidationError('Почта или пароль не верны')
+
+        return self.cleaned_data

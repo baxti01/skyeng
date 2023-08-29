@@ -22,13 +22,17 @@
                     <form method="POST" action="">
                         {% csrf_token %}
                         <div class="form-group">
+                            <div class="text-start">
+                                {{ form.non_field_errors }}
+                            </div>
                             {% for field in form %}
                                 <p>
-                                {{ field.errors }}
-                                {{ field.label_tag }}
-                                {{ field|addClass:'form-control border-white'}}
+                                    {{ field.errors }}
+                                    {{ field.label_tag }}
+                                    {{ field|addClass:'form-control border-white' }}
                                 </p>
                             {% endfor %}
+                            {#                            {{ form.as_p }}#}
                         </div>
                         <div class="container-buttons">
                             {% block form_buttons %}
